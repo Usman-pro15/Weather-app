@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Skycast | Live Weather Forecast</title>
+<meta name="description" content="Live weather and 7-day forecast for any city, powered by the Open-Meteo API.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-sky="clear-day">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="gCloud" gradientUnits="userSpaceOnUse" x1="0" y1="16" x2="0" y2="48"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#C5D3E6"/></linearGradient>
+<linearGradient id="gDark" gradientUnits="userSpaceOnUse" x1="0" y1="16" x2="0" y2="48"><stop offset="0" stop-color="#A6B3CB"/><stop offset="1" stop-color="#5A6783"/></linearGradient>
+<radialGradient id="gSun"><stop offset="0" stop-color="#FFF4B8"/><stop offset=".6" stop-color="#FFCB45"/><stop offset="1" stop-color="#FF9F1C"/></radialGradient>
+<linearGradient id="gMoon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFEF2"/><stop offset="1" stop-color="#C9D1F0"/></linearGradient>
+<linearGradient id="gBolt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFEB6B"/><stop offset="1" stop-color="#FFA800"/></linearGradient>
+<g id="cl" fill="url(#gCloud)"><circle cx="25" cy="35" r="9"/><circle cx="36" cy="29" r="12"/><circle cx="47" cy="36" r="8.5"/><rect x="16" y="34" width="39" height="12" rx="6"/></g>
+<g id="cd" fill="url(#gDark)"><circle cx="25" cy="35" r="9"/><circle cx="36" cy="29" r="12"/><circle cx="47" cy="36" r="8.5"/><rect x="16" y="34" width="39" height="12" rx="6"/></g>
+<g id="sunG"><g stroke="#FFB627" stroke-width="3.6" stroke-linecap="round"><path d="M32 5v7M32 52v7M5 32h7M52 32h7M13 13l5 5M46 46l5 5M13 51l5-5M46 18l5-5"/></g><circle cx="32" cy="32" r="12" fill="url(#gSun)"/></g>
+<g id="moonG"><path d="M40 10a21 21 0 1 0 14 34A17 17 0 0 1 40 10z" fill="url(#gMoon)"/><circle cx="48" cy="21" r="1.8" fill="#fff"/><circle cx="54" cy="30" r="1.3" fill="#fff"/></g>
+<g id="drops" stroke="#5BB6FF" stroke-width="3.4" stroke-linecap="round"><path d="M22 45l-3 9M32 45l-3 9M42 45l-3 9M27 54l-2 5M37 54l-2 5"/></g>
+<path id="fk" d="M0-5v10M-4.3-2.5l8.6 5M4.3-2.5l-8.6 5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+</defs>
+<symbol id="i-sun" viewBox="0 0 64 64"><use href="#sunG"/></symbol>
+<symbol id="i-moon" viewBox="0 0 64 64"><use href="#moonG"/></symbol>
+<symbol id="i-pcloud" viewBox="0 0 64 64"><use href="#sunG" transform="translate(-4 -6) scale(.74)"/><use href="#cl" transform="translate(6 10) scale(.88)"/></symbol>
+<symbol id="i-pcloudn" viewBox="0 0 64 64"><use href="#moonG" transform="translate(-6 -6) scale(.8)"/><use href="#cl" transform="translate(6 10) scale(.88)"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 64 64"><use href="#cd" transform="translate(10 -6) scale(.8)"/><use href="#cl" transform="translate(-2 4)"/></symbol>
+<symbol id="i-rain" viewBox="0 0 64 64"><use href="#cd" transform="translate(0 -6)"/><use href="#drops"/></symbol>
+<symbol id="i-shower" viewBox="0 0 64 64"><use href="#sunG" transform="translate(-6 -8) scale(.62)"/><use href="#cl" transform="translate(5 -2) scale(.9)"/><use href="#drops"/></symbol>
+<symbol id="i-snow" viewBox="0 0 64 64"><use href="#cl" transform="translate(0 -6)"/><use href="#fk" transform="translate(23 50)"/><use href="#fk" transform="translate(33 57)"/><use href="#fk" transform="translate(43 50)"/></symbol>
+<symbol id="i-storm" viewBox="0 0 64 64"><use href="#cd" transform="translate(0 -6)"/><path d="M35 36L26 51h7l-3 11 12-17h-8l4-9z" fill="url(#gBolt)"/></symbol>
+<symbol id="i-fog" viewBox="0 0 64 64"><use href="#cl" transform="translate(0 -8)"/><g stroke="#E3EAF3" stroke-width="3.6" stroke-linecap="round"><path d="M14 44h36M20 52h30M14 59h22"/></g></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.5-5.8"/><path d="M20 4v5h-5"/></symbol>
+<symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3L2 20h20L12 3z"/><path d="M12 10v5M12 18v.4"/></symbol>
+<symbol id="i-therm" viewBox="0 0 24 24"><path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z"/><path d="M12 9v7"/></symbol>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
+<symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 13h15a3 3 0 1 1-3 3"/><path d="M3 18h7"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/></symbol>
+<symbol id="i-uv" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></symbol>
+<symbol id="i-umb" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 18 0H3z"/><path d="M12 12v6a2 2 0 0 0 4 0"/></symbol>
+<symbol id="i-rise" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v6M9 8l3-3 3 3"/></symbol>
+<symbol id="i-set" viewBox="0 0 24 24"><path d="M3 19h18"/><path d="M7 19a5 5 0 0 1 10 0"/><path d="M12 5v6M9 8l3 3 3-3"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+</svg>
+<div class="sky" aria-hidden="true"><div class="orb"></div><div id="fx"></div></div>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#" aria-label="Skycast home">Sky<b>cast</b></a>
+    <form class="search" id="sf" role="search" novalidate>
+      <input id="q" type="search" placeholder="Search for a city" autocomplete="off" aria-label="City name">
+      <button class="ic" type="submit" aria-label="Search"><svg class="ui"><use href="#i-search"/></svg></button>
+      <button class="ic" type="button" id="loc" aria-label="Use my location" title="Use my location"><svg class="ui"><use href="#i-pin"/></svg></button>
+    </form>
+    <div class="unit" role="group" aria-label="Units"><button data-u="metric" class="on">&deg;C</button><button data-u="imperial">&deg;F</button></div>
+  </header>
+  <p class="hint" id="hint" role="alert"></p>
+  <div class="chips" id="quick" aria-label="Popular cities"></div>
+  <div class="chips" id="alt" aria-label="Other matches"></div>
+
+  <div id="app" data-state="loading">
+    <section class="stat" id="loading" aria-live="polite"><div class="spin"></div><p>Fetching the latest forecast...</p><div class="sk"></div><div class="sk"></div></section>
+    <section class="stat" id="error" role="alert"><div class="eic"><svg class="ui"><use href="#i-warn"/></svg></div><h2 id="et"></h2><p id="em"></p>
+      <button class="btn go1" id="retry">Try again</button><button class="btn" id="demo">View demo data</button></section>
+
+    <div class="content" id="content">
+      <div class="dash">
+        <article class="card now rise tilt" style="--i:0">
+          <div class="meta"><div><h1 id="city"></h1><p id="sub"></p><p id="when"></p></div><button class="ic" id="refresh" aria-label="Refresh weather" title="Refresh"><svg class="ui"><use href="#i-refresh"/></svg></button></div>
+          <div class="big"><div class="temp"><span id="t">0</span><sup id="tu"></sup></div><div class="wi" id="wi" aria-hidden="true"></div></div>
+          <p class="cond" id="cond"></p><p class="feel" id="hilo"></p><p class="upd" id="upd"></p>
+        </article>
+        <div class="det" id="det"></div>
+      </div>
+      <h2 class="sec">Next 24 hours</h2><div class="hours" id="hrs"></div>
+      <h2 class="sec">7-day forecast <small style="font-weight:500;color:var(--mute)">(tap or hover a card for details)</small></h2><div class="week" id="wk"></div>
+    </div>
+  </div>
+</div>
+<footer>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a></footer>
+
+<script src="file.js">
+
+</script>
+</body>
+</html>
